@@ -22,7 +22,7 @@ function App() {
     if (searchFilter === undefined) {
       return eachPokemon;
     }
-    return eachPokemon.name.toLowerCase().includes(searchFilter);
+    return eachPokemon.name.toLowerCase().includes(searchFilter.toLowerCase());
   });
 
   return (
