@@ -33,7 +33,7 @@ export default function PokeCard({ pName }) {
   }, [pName]);
 
   if (Object.keys(info).length === 0) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   const colorType = info.types[0].type.name;
