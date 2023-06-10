@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 export default function PokeCard({ pName }) {
   const [info, setInfo] = useState({});
+  const [stockImg, setStockImg] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const colorIndex = {
     grass: "bg-green-200",
@@ -17,6 +19,11 @@ export default function PokeCard({ pName }) {
     dragon: "bg-red-200",
     rock: "bg-slate-200",
     ice: "bg-teal-200",
+    fighting: "bg-red-300",
+    ghost: "bg-purple-300",
+    dark: "bg-slate-400",
+    steel: "bg-gray-500",
+    flying: "bg-pink-200",
   };
 
   useEffect(() => {
@@ -31,16 +38,61 @@ export default function PokeCard({ pName }) {
 
   const colorType = info.types[0].type.name;
 
+  const imgClick = () => {
+    if (stockImg === null) {
+      const paddedIndex = ("00" + info.id).slice(-3);
+      const image_url = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${paddedIndex}.png`;
+      setStockImg(image_url);
+    } else {
+      setStockImg(null);
+    }
+  };
+
+  // const handleHover = () => {
+  //   const paddedIndex = ("00" + info.id).slice(-3);
+  //   const image_url = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${paddedIndex}.png`;
+  //   setStockImg(image_url);
+  //   setIsHovered(true);
+  // };
+
+  // const handleMouseLeave = () => {
+  //   setIsHovered(false);
+  //   setStockImg(null);
+  // };
+
   return (
-    <div className={colorIndex[colorType]}>
-      <br />
-      <div>{pName}</div>
-      <div>{"id: " + info.id}</div>
-      <div>{"types: " + info.types[0].type.name}</div>
-      <div>
-        <img src={info.sprites.front_default} alt="" />
+    <div
+      onClick={imgClick}
+      // onMouseEnter={handleHover}
+      // onMouseLeave={handleMouseLeave}
+      className={`${colorIndex[colorType]} hover:bg-opacity-30 ${
+        isHovered ? "hover-style" : ""
+      }`}
+    >
+      <div className="text-xs">
+        #{info.id} {pName}
       </div>
-      <br />
+      {/* <div>{info.types[0].type.name}</div> */}
+      <div className="text-center">
+        {stockImg ? (
+          <div>
+            <img src={stockImg} width={"150px"} />
+          </div>
+        ) : (
+          <div>
+            <img
+              className="mx-auto d-block inline"
+              src={info.sprites.front_default}
+              alt=""
+            />
+            <img
+              className="mx-auto d-block inline"
+              src={info.sprites.back_default}
+              alt=""
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
